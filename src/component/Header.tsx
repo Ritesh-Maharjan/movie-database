@@ -42,7 +42,7 @@ const Header = () => {
           onClick={() => setOpenMenu(!openMenu)}
         >
           <svg
-            className={`${openMenu ? "block" : "hidden"} h-8 w-8`}
+            className={`${openMenu ? "hidden" : "block"} h-8 w-8`}
             fill="none"
             viewBox="0 0 24 24"
             strokeWidth="1.5"
@@ -56,7 +56,7 @@ const Header = () => {
             />
           </svg>
           <svg
-            className={`${openMenu ? "hidden" : "block"} h-8 w-8`}
+            className={`${openMenu ? "block" : "hidden"} h-8 w-8`}
             fill="none"
             viewBox="0 0 24 24"
             strokeWidth="1.5"
@@ -72,7 +72,7 @@ const Header = () => {
         </button>
         <div
           className={`${
-            openMenu ? "hidden" : "flex"
+            openMenu ? "flex" : "hidden"
           } absolute flex-col right-6 text-end top-14 sm:flex sm:gap-4 sm:text-lg sm:flex-row sm:relative sm:top-auto sm:right-auto lg:text-3xl`}
         >
           <NavLink to="/about">About</NavLink>
