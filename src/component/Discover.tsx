@@ -82,7 +82,10 @@ const Discover: React.FC<{ trendingData: ApiResponse[] }> = ({
       >
         {trendingData.map((el) => {
           return (
-            <div className="relative flex lg:flex-row gap-2 mx-2 min-w-[calc(100vw-1rem)] cursor-grab active:cursor-grabbing">
+            <div
+              key={el.id}
+              className="relative flex lg:flex-row gap-2 mx-2 min-w-[calc(100vw-1rem)] cursor-grab active:cursor-grabbing"
+            >
               <img
                 src={`https://image.tmdb.org/t/p/original/${el?.backdrop_path}`}
                 className="w-full  min-h-80  max-h-[90vh] object-cover rounded-lg"
@@ -110,13 +113,14 @@ const Discover: React.FC<{ trendingData: ApiResponse[] }> = ({
       </motion.section>
 
       <div className="w-full flex gap-1 items-center justify-center absolute bottom-0">
-        {trendingData.map((el, index) => {
+        {trendingData.map((_, index) => {
           return (
             <span
               className={` ${
                 imgIndex === index ? "bg-slate-50" : "bg-slate-500"
               } w-2 h-2 inline cursor-pointer p-1 my-2 rounded-full lg:p-2 `}
               onClick={() => setImgIndex(index)}
+              key={index}
             ></span>
           );
         })}

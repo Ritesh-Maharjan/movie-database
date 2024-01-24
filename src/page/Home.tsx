@@ -18,8 +18,8 @@ const Home = () => {
   const baseUrl = import.meta.env.VITE_BASE_URL;
 
   const [trendingData, setTrendingData] = useState<ApiResponse[]>([]);
+  const [nowPlayingData, setNowPlayingData] = useState<ApiResponse[]>([]);
   // setting variables to call the api
-  const url = `${baseUrl}/3/trending/movie/day?language=en-US&results=5`;
   const options = {
     method: "GET",
     headers: {
@@ -29,17 +29,32 @@ const Home = () => {
   };
 
   useEffect(() => {
-    const discoverMovie = async () => {
+    const trendingMovie = async () => {
       try {
-        const response = await axios.get(url, options);
+        const response = await axios.get(
+          `${baseUrl}/3/trending/movie/day?language=en-US&results=5`,
+          options
+        );
         console.log(response.data.results);
         setTrendingData(response.data.results);
       } catch (e) {
         console.log(e);
       }
     };
+    const nowPlaying = async () => {
+      try {
+        const response = await axios.get(
+          `${baseUrl}/3/movie/now_playing?language=en-US&page=1`,
+          options
+        );
+        setNowPlayingData(response.data.results);
+      } catch (e) {
+        console.log(e);
+      }
+    };
 
-    discoverMovie();
+    trendingMovie();
+    nowPlaying();
   }, []);
 
   return (
