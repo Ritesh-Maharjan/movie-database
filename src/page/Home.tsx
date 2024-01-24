@@ -19,7 +19,7 @@ const Home = () => {
 
   const [trendingData, setTrendingData] = useState<ApiResponse[]>([]);
   // setting variables to call the api
-  const url = `${baseUrl}/3/trending/all/day?language=en-US`;
+  const url = `${baseUrl}/3/trending/movie/day?language=en-US&results=5`;
   const options = {
     method: "GET",
     headers: {
@@ -44,7 +44,7 @@ const Home = () => {
 
   return (
     <>
-      <main>
+      <main className="overflow-hidden ">
         <Discover trendingData={trendingData} />
       </main>
     </>
