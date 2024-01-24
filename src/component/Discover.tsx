@@ -85,12 +85,12 @@ const Discover: React.FC<{ trendingData: ApiResponse[] }> = ({
             <div className="relative flex lg:flex-row gap-2 mx-2 min-w-[calc(100vw-1rem)] cursor-grab active:cursor-grabbing">
               <img
                 src={`https://image.tmdb.org/t/p/original/${el?.backdrop_path}`}
-                className="w-full  min-h-80  max-h-[90vh] object-cover flex-[3] rounded-lg"
+                className="w-full  min-h-80  max-h-[90vh] object-cover rounded-lg"
                 loading="lazy"
                 alt={el?.original_title}
                 draggable="false"
               />
-              <div className="absolute bottom-6 right-0 max-w-96 lg:relative  flex flex-col items-center justify-center gap-2 bg-black/50 p-4 flex-1 rounded-lg ">
+              <div className="absolute bottom-6 right-0 max-w-96 flex flex-col items-center justify-center gap-2 bg-black/50 p-4  rounded-lg xl:max-w-[25vw] lg:relative lg:bottom-0">
                 <h2 className="text-center flex justify-between w-full gap-2 text-sm sm:text-xl md:text-xl lg:text-3xl">
                   {el?.original_title}
                   <span className="flex gap-2 place-self-end lg:text-2xl">
