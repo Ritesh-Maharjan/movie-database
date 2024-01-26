@@ -23,7 +23,7 @@ const Option: React.FC<{
   const controls = useAnimationControls();
 
   useEffect(() => {
-    // only set the width if the component has loaded
+    //  set the width once the component is loaded
     if (sliderContainer.current) {
       setWidth(
         sliderContainer.current?.scrollWidth -
@@ -60,7 +60,7 @@ const Option: React.FC<{
 
   const leftMove = () => {
     const newX = Math.min(dragX.get() + 500, 0); // Ensure the new x value is within bounds
-    console.log(dragX.get());
+    // moving the slider
     controls.start({
       x: newX,
       transition: { type: "tween", ease: "easeInOut", duration: 1 },
@@ -68,8 +68,8 @@ const Option: React.FC<{
   };
 
   const rightMove = () => {
-    console.log(dragX.get());
     const newX = Math.max(dragX.get() - 500, -width); // Ensure the new x value is within bounds
+    // moving the slider
     controls.start({
       x: newX,
       transition: { type: "tween", ease: "easeInOut", duration: 1 },
