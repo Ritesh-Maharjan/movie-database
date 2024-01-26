@@ -1,10 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { ApiResponse } from "../assets/type/types";
-import clipAndReplace from "../utils/clipandreplace";
+import clipAndReplace from "../utils/clipAndReplace";
 
 // Will recieve a single movie with type of ApiResponse
 const Card: React.FC<{ movie: ApiResponse }> = ({ movie }) => {
+  // to display whether the movies are added to favorite or not
+  const [added, setAdded] = useState<string>("");
+
+  useEffect(() => {
+    // getting the favorite from localstorage if its saved
+    let temp = localStorage.getItem(`${movie.id}`);
+    temp ? setAdded(temp) : setAdded("");
+  }, []);
+
+  // handling the add and remove of localstorage for favorite movies
+  const add = () => {
+    let temp = localStorage.getItem(`${movie.id}`);
+    if (temp) {
+      localStorage.removeItem(`${movie.id}`);
+      setAdded("");
+    } else {
+      localStorage.setItem(`${movie.id}`, "true");
+      setAdded("true");
+    }
+  };
   return (
     <motion.div
       whileHover={{ scale: 1.1 }}
@@ -25,10 +45,13 @@ const Card: React.FC<{ movie: ApiResponse }> = ({ movie }) => {
           {clipAndReplace(movie.overview, 140)}{" "}
         </p>
         <div className="flex w-full justify-center gap-4">
-          <button className="bg-red-900 text-xs px-2 py-1 rounded-md sm:px-4 sm:text-base">
-            Add &#10084;
+          <button
+            className={` ${added ? "bg-red-900" :"bg-green-600"} bg-opacity-90 text-xs px-2 py-1 rounded-md hover:scale-105 sm:px-4 sm:text-base`}
+            onClick={add}
+          >
+            {added ? "Remove" : "Add"}
           </button>
-          <button className="bg-indigo-400 text-xs px-2 py-1 rounded-md sm:px-4 sm:text-base">
+          <button className="bg-blue-500 text-xs px-2 py-1 rounded-md hover:scale-105 sm:px-4 sm:text-base">
             Details
           </button>
         </div>
