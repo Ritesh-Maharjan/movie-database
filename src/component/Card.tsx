@@ -9,7 +9,7 @@ const Card: React.FC<{ movie: ApiResponse }> = ({ movie }) => {
   const [added, setAdded] = useState<string>("");
 
   useEffect(() => {
-    // getting the favorite from localstorage if its saved
+    // getting the favorite from localstorage if its saved and storing in our state
     let temp = localStorage.getItem(`${movie.id}`);
     temp ? setAdded(temp) : setAdded("");
   }, []);
@@ -21,14 +21,14 @@ const Card: React.FC<{ movie: ApiResponse }> = ({ movie }) => {
       localStorage.removeItem(`${movie.id}`);
       setAdded("");
     } else {
-      localStorage.setItem(`${movie.id}`, "true");
+      localStorage.setItem(`${movie.id}`, JSON.stringify(movie));
       setAdded("true");
     }
   };
   return (
     <motion.div
       whileHover={{ scale: 1.1 }}
-      className="relative min-w-40 sm:min-w-52 "
+      className="relative w-40 min-w-40 sm:min-w-52 "
     >
       <motion.div
         initial={{ opacity: 0 }}
@@ -46,7 +46,9 @@ const Card: React.FC<{ movie: ApiResponse }> = ({ movie }) => {
         </p>
         <div className="flex w-full justify-center gap-4">
           <button
-            className={` ${added ? "bg-red-900" :"bg-green-600"} bg-opacity-90 text-xs px-2 py-1 rounded-md hover:scale-105 sm:px-4 sm:text-base`}
+            className={` ${
+              added ? "bg-red-900" : "bg-green-600"
+            } bg-opacity-90 text-xs px-2 py-1 rounded-md hover:scale-105 sm:px-4 sm:text-base`}
             onClick={add}
           >
             {added ? "Remove" : "Add"}
