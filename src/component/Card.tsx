@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { ApiResponse } from "../assets/type/types";
 import clipAndReplace from "../utils/clipAndReplace";
+import { Link } from "react-router-dom";
 
 // Will recieve a single movie with type of ApiResponse
 const Card: React.FC<{ movie: ApiResponse }> = ({ movie }) => {
@@ -53,9 +54,9 @@ const Card: React.FC<{ movie: ApiResponse }> = ({ movie }) => {
           >
             {added ? "Remove" : "Add"}
           </button>
-          <button className="bg-blue-500 text-xs px-2 py-1 rounded-md hover:scale-105 sm:px-4 sm:text-base">
+          <Link to={`details/${movie.id}`} className="bg-blue-500 text-xs px-2 py-1 rounded-md hover:scale-105 sm:px-4 sm:text-base">
             Details
-          </button>
+          </Link>
         </div>
       </motion.div>
 

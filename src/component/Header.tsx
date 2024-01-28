@@ -6,7 +6,7 @@ const Header = () => {
   const [openMenu, setOpenMenu] = useState(false);
 
   return (
-    <div className="flex items-center justify-between p-6">
+    <header className="flex items-center justify-between p-6">
       <h1 className="text-lg md:text-3xl lg:text-6xl">
         <NavLink to="/">IMDB</NavLink>
       </h1>
@@ -36,7 +36,7 @@ const Header = () => {
         </svg>
       </motion.form>
 
-      <div>
+      <nav>
         <button
           className="relative cursor-pointer sm:hidden"
           onClick={() => setOpenMenu(!openMenu)}
@@ -78,8 +78,8 @@ const Header = () => {
           <NavLink to="/about">About</NavLink>
           <NavLink to="/favorite">Favorite</NavLink>
         </div>
-      </div>
-    </div>
+      </nav>
+    </header>
   );
 };
 

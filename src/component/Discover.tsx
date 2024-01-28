@@ -23,25 +23,25 @@ const Discover: React.FC<{ trendingData: ApiResponse[] }> = ({
 
   //   to know how much we dragged
   const dragX = useMotionValue(0);
-  useEffect(() => {
-    const intervalRef = setInterval(() => {
-      const x = dragX.get();
+  // useEffect(() => {
+  //   const intervalRef = setInterval(() => {
+  //     const x = dragX.get();
 
-      //   if we are not dragging the iamge we need to run the automatic
-      if (x === 0) {
-        setImgIndex((pv) => {
-          if (pv === trendingData.length - 1) {
-            return 0;
-          }
-          return pv + 1;
-        });
-      }
-    }, AUTO_DELAY);
+  //     //   if we are not dragging the iamge we need to run the automatic
+  //     if (x === 0) {
+  //       setImgIndex((pv) => {
+  //         if (pv === trendingData.length - 1) {
+  //           return 0;
+  //         }
+  //         return pv + 1;
+  //       });
+  //     }
+  //   }, AUTO_DELAY);
 
-    return () => {
-      clearInterval(intervalRef);
-    };
-  }, []);
+  //   return () => {
+  //     clearInterval(intervalRef);
+  //   };
+  // }, []);
 
   const onDragEnd = () => {
     // to check if its slight drag or huge drag
@@ -84,16 +84,16 @@ const Discover: React.FC<{ trendingData: ApiResponse[] }> = ({
           return (
             <div
               key={el.id}
-              className="relative flex lg:flex-row gap-2 mx-2 min-w-[calc(100vw-1rem)] cursor-grab active:cursor-grabbing"
+              className="relative flex lg:flex-row gap-2 min-w-[100vw] 2xl:min-w-[1536px] cursor-grab active:cursor-grabbing"
             >
               <img
                 src={`https://image.tmdb.org/t/p/original/${el?.backdrop_path}`}
-                className="w-full  min-h-80  max-h-[90vh] object-cover rounded-lg"
+                className="w-full max-w-[1252px] min-h-80  max-h-[90vh] object-cover rounded-lg"
                 loading="lazy"
                 alt={el?.original_title}
                 draggable="false"
               />
-              <div className="absolute bottom-6 right-0 max-w-96 flex flex-col items-center justify-center gap-2 bg-black/50 p-4  rounded-lg xl:max-w-[25vw] lg:relative lg:bottom-0">
+              <div className="absolute bottom-6 right-0 max-w-96 flex flex-col items-center justify-center gap-2 bg-black/50 p-4  rounded-lg xl:max-w-xl lg:relative lg:bottom-0">
                 <h2 className="text-center flex justify-between w-full gap-2 text-sm sm:text-xl md:text-xl lg:text-3xl">
                   {el?.original_title}
                   <span className="flex gap-2 place-self-end lg:text-2xl">
