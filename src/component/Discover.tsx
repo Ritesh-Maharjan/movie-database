@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion, spring, useMotionValue } from "framer-motion";
-import { ApiResponse } from "../assets/type/types";
+import { ApiResponse } from "../utils/type/types";
 import { Link } from "react-router-dom";
 import Loading from "../assets/images/loading.gif";
 import NotFoundImg from "../assets/images/notfound.jpg";
@@ -26,6 +26,7 @@ const Discover: React.FC<{ trendingData: ApiResponse[] }> = ({
         setImgIndex((currentIndex) => {
           // if last index then go to the first image
           if (currentIndex >= trendingData.length - 1) {
+            currentIndex = 0;
             return 0;
           }
           return currentIndex + 1;

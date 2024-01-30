@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
 import axios from "axios";
-import { SearchResult } from "../assets/type/types";
+import { SearchResult } from "../utils/type/types";
 
 const Header = () => {
   // FOR MENu

@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import axios from "axios";
-import { DetailsApiResponse } from "../assets/type/types";
+import { DetailsApiResponse } from "../utils/type/types";
 import changeDateFormat from "../utils/DateFormat";
 import notFoundImg from "../assets/images/notfound.jpg";
 import Loading from "../assets/images/loading.gif";
@@ -38,7 +38,6 @@ const Details = () => {
           `${baseUrl}/3/movie/${id}?append_to_response=videos,genre,similar,credits&sort_by=credits`,
           options
         );
-        console.log(response.data);
         SetMovie(response.data);
       } catch (e) {
         console.log(e);

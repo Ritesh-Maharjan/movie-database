@@ -1,5 +1,5 @@
 import { motion, useAnimationControls, useMotionValue } from "framer-motion";
-import { ApiResponse } from "../assets/type/types";
+import { ApiResponse } from "../utils/type/types";
 import Card from "./Card";
 import { useEffect, useRef, useState } from "react";
 import Loading from "../assets/images/loading.gif";
@@ -36,7 +36,6 @@ const Option: React.FC<{
   useEffect(() => {
     switch (title) {
       case "now_playing":
-        console.log(title);
         setHeadingTitle("Now Playing");
         break;
       case "popular":

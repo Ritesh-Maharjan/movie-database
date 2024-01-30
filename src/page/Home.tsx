@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Discover from "../component/Discover";
 import Option from "../component/Option";
-import { ApiResponse } from "../assets/type/types";
+import { ApiResponse } from "../utils/type/types";
 
 const Home = () => {
   const apiKey = import.meta.env.VITE_API_KEY;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ApiResponse } from "../assets/type/types";
+import { ApiResponse } from "../utils/type/types";
 import clipAndReplace from "../utils/clipAndReplace";
 import NotFoundImg from "../assets/images/notfound.jpg";
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ApiResponse } from "../assets/type/types";
+import { ApiResponse } from "../utils/type/types";
 import Card from "../component/Card";
 import { Link } from "react-router-dom";
 
@@ -27,7 +27,7 @@ const Favorite = () => {
       {favoriteMovie.length > 0 ? (
         <section className="flex gap-6 my-10 flex-wrap justify-center ">
           {favoriteMovie.map((el) => (
-            <Card movie={el} />
+            <Card key={el.id} movie={el} />
           ))}
         </section>
       ) : (
