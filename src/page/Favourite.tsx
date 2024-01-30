@@ -3,8 +3,8 @@ import { ApiResponse } from "../utils/type/types";
 import Card from "../component/Card";
 import { Link } from "react-router-dom";
 
-const Favorite = () => {
-  const [favoriteMovie, setFavoriteMovie] = useState<ApiResponse[]>([]);
+const Favourite = () => {
+  const [favouriteMovie, setFavouriteMovie] = useState<ApiResponse[]>([]);
 
   useEffect(() => {
     // Get all keys from local storage
@@ -17,28 +17,27 @@ const Favorite = () => {
         return JSON.parse(movie);
       }
     });
-    setFavoriteMovie(getMovie);
+    setFavouriteMovie(getMovie);
   }, []);
 
   return (
-    <main className="p-4 min-h-[90vh]">
-      <h1 className="text-center text-4xl sm:text-6xl"> Favorites</h1>
+    <main className=" min-h-[90vh] flex flex-col">
+      <h1 className="text-center text-4xl sm:text-6xl"> Favourites</h1>
 
-      {favoriteMovie.length > 0 ? (
+      {favouriteMovie.length > 0 ? (
         <section className="flex gap-6 my-10 flex-wrap justify-center ">
-          {favoriteMovie.map((el) => (
+          {favouriteMovie.map((el) => (
             <Card key={el.id} movie={el} />
           ))}
         </section>
       ) : (
-        <section className="flex flex-col items-center justify-center w-full">
+        <section className="flex flex-1 flex-col items-center justify-center w-full min-h-full">
           <h3 className="text-xl text-center sm:text-4xl">
-            No Favorites Found
+            No Favourites Found
           </h3>
           <p className="text-sm my-4 text-center sm:text-2xl">
-            You currently do not have any favorites. Please click{" "}
+            You currently do not have any favourites. Please click{" "}
             <Link to="/" className="text-blue-500">
-              {" "}
               here
             </Link>{" "}
             to go browse the movies and add to homepage.
@@ -49,4 +48,4 @@ const Favorite = () => {
   );
 };
 
-export default Favorite;
+export default Favourite;

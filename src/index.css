@@ -19,13 +19,13 @@
   }
 
   main {
-    padding-top: 10vh;
+    padding-top: 12vh;
   }
 
   @media screen and (max-width:768px) {
 
     main {
-      padding-top: 5vh;
+      padding-top: 7vh;
     }
     
   }
