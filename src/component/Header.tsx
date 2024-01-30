@@ -1,24 +1,77 @@
-import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { Link, NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
+import axios from "axios";
+import { SearchResult } from "../assets/type/types";
 
 const Header = () => {
+  // FOR MENu
   const [openMenu, setOpenMenu] = useState(false);
+  const [input, setInput] = useState("");
+  const [searchFocused, setSearchFocused] = useState(false);
+  const [searchResult, setSearchResult] = useState<SearchResult[]>([]);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const apiKey = import.meta.env.VITE_API_KEY;
+  const baseUrl = import.meta.env.VITE_BASE_URL;
+
+  // setting option method to call the api
+  const options = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${apiKey}`,
+    },
+  };
+
+  useEffect(() => {
+    const movieSearch = async () => {
+      try {
+        const response = await axios.get(
+          `${baseUrl}/3/search/movie?query=${input}&include_adult=false&language=en-US&page=1'`,
+          options
+        );
+        console.log(response.data);
+        setSearchResult(response.data.results);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    const handleDocumentClick = (e: MouseEvent | PointerEvent) => {
+      if (inputRef.current && inputRef.current.contains(e.target as Node)) {
+        setSearchFocused(true);
+      } else {
+        setSearchFocused(false);
+        if (inputRef.current) {
+          inputRef.current.value = "";
+        }
+        setInput("");
+      }
+    };
+
+    document.addEventListener("click", handleDocumentClick);
+    movieSearch();
+    return () => {
+      document.removeEventListener("click", handleDocumentClick);
+    };
+  }, [input]);
 
   return (
-    <header className="flex items-center justify-between p-6">
+    <header className="mx-auto fixed left-0 right-0 top-0 z-30 w-full md:h-[10vh] bg-black flex items-center justify-between p-2">
       <h1 className="text-lg md:text-3xl lg:text-6xl">
         <NavLink to="/">IMDB</NavLink>
       </h1>
 
-      <motion.form
-        whileHover={{ scale: 1.1 }}
-        className={`relative flex items-center basis-2/4 max-w-md`}
-      >
+      <form className={`relative flex items-center sm:w-1/3`}>
         <input
+          ref={inputRef}
           className="outline-none text-xs text-slate-800 p-1 rounded-lg w-full lg:text-2xl "
-          type="search"
+          type="text"
           placeholder="Search a movie..."
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setInput(e.target?.value)
+          }
         />
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -34,7 +87,22 @@ const Header = () => {
             d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
           />
         </svg>
-      </motion.form>
+        {searchFocused && (
+          <div className="absolute top-14 z-30 bg-gray-500 w-full">
+            {searchResult.map((searchEl, index) => {
+              return (
+                index < 5 && (
+                  <Link key={searchEl.id} to={`details/${searchEl.id}`}>
+                    <p className="cursor-pointer border-b-2 p-2">
+                      {searchEl.original_title}
+                    </p>
+                  </Link>
+                )
+              );
+            })}
+          </div>
+        )}
+      </form>
 
       <nav>
         <button
@@ -70,14 +138,18 @@ const Header = () => {
             />
           </svg>
         </button>
-        <div
+        <motion.div
           className={`${
-            openMenu ? "flex" : "hidden"
-          } absolute flex-col right-6 text-end top-14 sm:flex sm:gap-4 sm:text-lg sm:flex-row sm:relative sm:top-auto sm:right-auto lg:text-3xl`}
+            openMenu ? "h-20" : "h-0"
+          } absolute z-20 bg-black left-0 right-0 top-12 overflow-hidden flex flex-col gap-2 sm:flex-row sm:relative sm:h-auto sm:top-0`}
         >
-          <NavLink to="/about">About</NavLink>
-          <NavLink to="/favorite">Favorite</NavLink>
-        </div>
+          <NavLink className="mx-2 mt-2 sm:mt-0" to="/about">
+            About
+          </NavLink>
+          <NavLink className="mx-2" to="/favorite">
+            Favorite
+          </NavLink>
+        </motion.div>
       </nav>
     </header>
   );

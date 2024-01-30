@@ -1,13 +1,3 @@
-export interface ApiResponse {
-  id: number;
-  overview: string;
-  original_title: string;
-  release_date: string;
-  vote_average: number;
-  backdrop_path: string;
-  poster_path: string;
-}
-
 type Genre = {
   id: number;
   name: string;
@@ -33,8 +23,23 @@ type Cast = {
   profile_path: string;
 };
 
+export interface ApiResponse {
+  id: number;
+  overview: string;
+  original_title: string;
+  release_date: string;
+  vote_average: number;
+  backdrop_path: string;
+  poster_path: string;
+}
+
 export interface DetailsApiResponse extends ApiResponse {
   genres: Genre[];
   videos: Results;
   credits: Credits;
 }
+
+export type SearchResult = {
+  original_title: string;
+  id: number;
+};

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Finger+Paint&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Finger+Paint&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -6,14 +6,21 @@
 
 @layer base {
   body {
-    font-family: 'Crimson Text', serif;
+    font-family: "Crimson Text", serif;
     background-color: #1a1a1a;
     color: #d9d9d9;
   }
 
-  main,header,footer {
+  main,
+  header,
+  footer {
     max-width: 1536px;
     margin: 0 auto;
+  }
+
+  main {
+    position: relative;
+    top: 10vh;
   }
 
   h1,
@@ -35,5 +42,12 @@
 
   h3 {
     font-size: 2rem;
+  }
+
+  input[type="text"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
   }
 }

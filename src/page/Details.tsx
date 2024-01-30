@@ -45,7 +45,7 @@ const Details = () => {
     };
 
     getMovie();
-  }, []);
+  }, [id]);
 
   const toggleFavorite = () => {
     let temp = localStorage.getItem(`${id}`);
@@ -62,20 +62,29 @@ const Details = () => {
     <main className=" w-screen">
       <section>
         {/* movie hero image */}
-        <figure className="hidden sm:block relative overflow-hidden max-h-screen">
-          <img
-            src={`${imgUrl}${movie?.backdrop_path}`}
-            alt={movie?.original_title}
-            className="h-full object-cover"
-          />
-          {/* For the shadow effect inside the image corners */}
+        {movie?.backdrop_path ? (
+          <figure className="hidden sm:block relative overflow-hidden  max-h-screen">
+            <img
+              src={`${imgUrl}${movie?.backdrop_path}`}
+              alt={movie?.original_title}
+              className="h-full object-cover"
+            />
+            {/* For the shadow effect inside the image corners */}
+            <div
+              className="absolute top-0 bottom-0 left-0 right-0"
+              style={{
+                boxShadow: "rgba(0, 0, 0, 0.7) 16px 9px 115px 115px inset",
+              }}
+            ></div>
+          </figure>
+        ) : (
           <div
-            className="absolute top-0 bottom-0 left-0 right-0"
+            className="hidden sm:block relative overflow-hidden min-h-screen"
             style={{
               boxShadow: "rgba(0, 0, 0, 0.7) 16px 9px 115px 115px inset",
             }}
           ></div>
-        </figure>
+        )}
 
         {/* movie image/video */}
         <article className="relative flex flex-col gap-2 p-4 items-center max-w-7xl mx-auto overflow-hidden sm:-mt-80 sm:flex-row sm:gap-14">
