@@ -11,7 +11,7 @@ const Discover: React.FC<{ trendingData: ApiResponse[] }> = ({
 }) => {
   const DRAG_BUFFER = 50;
   const ONE_SEC = 1000;
-  const AUTO_DELAY = ONE_SEC * 2;
+  const AUTO_DELAY = ONE_SEC * 5;
   const [imgIndex, setImgIndex] = useState(0);
 
   //   to know how much we dragged

@@ -5,12 +5,15 @@ import axios from "axios";
 import { SearchResult } from "../utils/type/types";
 
 const Header = () => {
-  // FOR MENu
+  // For mobile menu
   const [openMenu, setOpenMenu] = useState(false);
+  // search input reference
+  const inputRef = useRef<HTMLInputElement>(null);
+  // search input bar
   const [input, setInput] = useState("");
+  // to display/hide search results
   const [searchFocused, setSearchFocused] = useState(false);
   const [searchResult, setSearchResult] = useState<SearchResult[]>([]);
-  const inputRef = useRef<HTMLInputElement>(null);
 
   const apiKey = import.meta.env.VITE_API_KEY;
   const baseUrl = import.meta.env.VITE_BASE_URL;
@@ -25,6 +28,7 @@ const Header = () => {
   };
 
   useEffect(() => {
+    // search the movie based on the keyword
     const movieSearch = async () => {
       try {
         const response = await axios.get(
@@ -37,6 +41,7 @@ const Header = () => {
       }
     };
 
+    // to check whether the search input is focused or not
     const handleDocumentClick = (e: MouseEvent | PointerEvent) => {
       if (inputRef.current && inputRef.current.contains(e.target as Node)) {
         setSearchFocused(true);
@@ -52,16 +57,21 @@ const Header = () => {
     document.addEventListener("click", handleDocumentClick);
     movieSearch();
     return () => {
+      // removing the event listener when the commponent unmounts
       document.removeEventListener("click", handleDocumentClick);
     };
   }, [input]);
 
   return (
+    //
     <header className="mx-auto fixed left-0 right-0 top-0 z-30 w-full h-[5vh] md:h-[10vh] bg-black flex items-center justify-between p-2">
-      <h1 className="text-lg md:text-6xl">
-        <NavLink to="/">IMDB</NavLink>
+      <h1 className="text-lg md:text-6xl hover:scale-110">
+        <NavLink to="/">
+          Mv<span className="text-orange-400">DB</span>
+        </NavLink>
       </h1>
 
+      {/* Input Search */}
       <form className={`relative flex items-center sm:w-1/3`}>
         <input
           ref={inputRef}
@@ -86,6 +96,7 @@ const Header = () => {
             d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
           />
         </svg>
+        {/* display only when search input is focused */}
         {searchFocused && (
           <div className="absolute top-14 z-30 bg-gray-500 w-full">
             {searchResult.map((searchEl, index) => {
@@ -104,6 +115,7 @@ const Header = () => {
       </form>
 
       <nav>
+        {/* Menu button on mobile */}
         <button
           className="relative cursor-pointer sm:hidden"
           onClick={() => setOpenMenu(!openMenu)}
@@ -137,18 +149,19 @@ const Header = () => {
             />
           </svg>
         </button>
-        <motion.div
+        {/* Nav */}
+        <div
           className={`${
             openMenu ? "h-20" : "h-0"
           } absolute z-20 bg-black left-0 right-0 top-12 overflow-hidden flex flex-col gap-2 sm:flex-row sm:relative sm:h-auto sm:top-0 md:text-3xl`}
         >
-          <NavLink className="mx-2 mt-2 sm:mt-0" to="/about">
+          <NavLink className="mx-2 mt-2 sm:mt-0 hover:scale-110" to="/about">
             About
           </NavLink>
-          <NavLink className="mx-2" to="/favorite">
+          <NavLink className="mx-2 hover:scale-110" to="/favorite">
             Favorite
           </NavLink>
-        </motion.div>
+        </div>
       </nav>
     </header>
   );
