@@ -2,6 +2,7 @@ import { motion, useAnimationControls, useMotionValue } from "framer-motion";
 import { ApiResponse } from "../assets/type/types";
 import Card from "./Card";
 import { useEffect, useRef, useState } from "react";
+import Loading from "../assets/images/loading.gif";
 
 // defining the props recieved to be the array of ApiResponse type, title string and getMoreMovies function
 const Option: React.FC<{
@@ -132,9 +133,13 @@ const Option: React.FC<{
         className="flex gap-6 cursor-grab focus:cursor-grabbing"
         animate={controls}
       >
-        {data?.map((el) => {
-          return <Card key={el.id} movie={el} />;
-        })}
+        {!data ? (
+          <img className="mx-auto" src={Loading} alt="Loading" />
+        ) : (
+          data?.map((el) => {
+            return <Card key={el.id} movie={el} />;
+          })
+        )}
       </motion.div>
     </section>
   );

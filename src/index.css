@@ -19,8 +19,15 @@
   }
 
   main {
-    position: relative;
-    top: 10vh;
+    padding-top: 10vh;
+  }
+
+  @media screen and (max-width:768px) {
+
+    main {
+      padding-top: 5vh;
+    }
+    
   }
 
   h1,

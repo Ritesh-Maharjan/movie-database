@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ApiResponse } from "../assets/type/types";
 import clipAndReplace from "../utils/clipAndReplace";
-import { Link } from "react-router-dom";
+import NotFoundImg from "../assets/images/notfound.jpg";
 
 // Will recieve a single movie with type of ApiResponse
 const Card: React.FC<{ movie: ApiResponse }> = ({ movie }) => {
@@ -54,7 +55,7 @@ const Card: React.FC<{ movie: ApiResponse }> = ({ movie }) => {
           >
             {added ? "Remove" : "Add"}
           </button>
-          <Link to={`details/${movie.id}`} className="bg-blue-500 text-xs px-2 py-1 rounded-md hover:scale-105 sm:px-4 sm:text-base">
+          <Link to={`/details/${movie.id}`} className="bg-blue-500 text-xs px-2 py-1 rounded-md hover:scale-105 sm:px-4 sm:text-base">
             Details
           </Link>
         </div>
@@ -62,7 +63,8 @@ const Card: React.FC<{ movie: ApiResponse }> = ({ movie }) => {
 
       <img
         draggable="false"
-        src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
+        src={ movie.poster_path ? `https://image.tmdb.org/t/p/original/${movie.poster_path}` : NotFoundImg}
+        alt={movie.poster_path ? movie.original_title : "Not found image"}
         className="rounded-lg"
       />
     </motion.div>

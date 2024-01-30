@@ -31,7 +31,6 @@ const Header = () => {
           `${baseUrl}/3/search/movie?query=${input}&include_adult=false&language=en-US&page=1'`,
           options
         );
-        console.log(response.data);
         setSearchResult(response.data.results);
       } catch (e) {
         console.log(e);
@@ -58,15 +57,15 @@ const Header = () => {
   }, [input]);
 
   return (
-    <header className="mx-auto fixed left-0 right-0 top-0 z-30 w-full md:h-[10vh] bg-black flex items-center justify-between p-2">
-      <h1 className="text-lg md:text-3xl lg:text-6xl">
+    <header className="mx-auto fixed left-0 right-0 top-0 z-30 w-full h-[5vh] md:h-[10vh] bg-black flex items-center justify-between p-2">
+      <h1 className="text-lg md:text-6xl">
         <NavLink to="/">IMDB</NavLink>
       </h1>
 
       <form className={`relative flex items-center sm:w-1/3`}>
         <input
           ref={inputRef}
-          className="outline-none text-xs text-slate-800 p-1 rounded-lg w-full lg:text-2xl "
+          className="outline-none text-xs text-slate-800 p-1 rounded-lg w-full md:text-2xl "
           type="text"
           placeholder="Search a movie..."
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -141,7 +140,7 @@ const Header = () => {
         <motion.div
           className={`${
             openMenu ? "h-20" : "h-0"
-          } absolute z-20 bg-black left-0 right-0 top-12 overflow-hidden flex flex-col gap-2 sm:flex-row sm:relative sm:h-auto sm:top-0`}
+          } absolute z-20 bg-black left-0 right-0 top-12 overflow-hidden flex flex-col gap-2 sm:flex-row sm:relative sm:h-auto sm:top-0 md:text-3xl`}
         >
           <NavLink className="mx-2 mt-2 sm:mt-0" to="/about">
             About

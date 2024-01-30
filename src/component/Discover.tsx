@@ -1,16 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { motion, spring, useMotionValue } from "framer-motion";
-
-interface ApiResponse {
-  id: number;
-  overview: string;
-  original_title: string;
-  release_date: string;
-  genre_ids: number[];
-  vote_average: number;
-  backdrop_path: string;
-  poster_path: string;
-}
+import { ApiResponse } from "../assets/type/types";
+import { Link } from "react-router-dom";
+import Loading from "../assets/images/loading.gif";
+import NotFoundImg from "../assets/images/notfound.jpg";
 
 // declaring the props is going to be ApiResponse
 const Discover: React.FC<{ trendingData: ApiResponse[] }> = ({
@@ -18,35 +11,37 @@ const Discover: React.FC<{ trendingData: ApiResponse[] }> = ({
 }) => {
   const DRAG_BUFFER = 50;
   const ONE_SEC = 1000;
-  const AUTO_DELAY = ONE_SEC * 10;
+  const AUTO_DELAY = ONE_SEC * 2;
   const [imgIndex, setImgIndex] = useState(0);
 
   //   to know how much we dragged
   const dragX = useMotionValue(0);
-  // useEffect(() => {
-  //   const intervalRef = setInterval(() => {
-  //     const x = dragX.get();
 
-  //     //   if we are not dragging the iamge we need to run the automatic
-  //     if (x === 0) {
-  //       setImgIndex((pv) => {
-  //         if (pv === trendingData.length - 1) {
-  //           return 0;
-  //         }
-  //         return pv + 1;
-  //       });
-  //     }
-  //   }, AUTO_DELAY);
+  useEffect(() => {
+    const intervalRef = setInterval(() => {
+      const x = dragX.get();
 
-  //   return () => {
-  //     clearInterval(intervalRef);
-  //   };
-  // }, []);
+      //   if we are not dragging the iamge we need to run the automatic
+      if (x === 0) {
+        setImgIndex((currentIndex) => {
+          // if last index then go to the first image
+          if (currentIndex >= trendingData.length - 1) {
+            return 0;
+          }
+          return currentIndex + 1;
+        });
+      }
+    }, AUTO_DELAY);
+
+    return () => {
+      clearInterval(intervalRef);
+    };
+  }, []);
 
   const onDragEnd = () => {
     // to check if its slight drag or huge drag
     const x = dragX.get();
-    // if drag greater then we want to swap images
+    // if drag greater then DRAG_BUFFER we want to swap images
     if (x <= -DRAG_BUFFER) {
       if (imgIndex < trendingData.length - 1) {
         setImgIndex((pv) => pv + 1);
@@ -80,36 +75,44 @@ const Discover: React.FC<{ trendingData: ApiResponse[] }> = ({
           damping: 50,
         }}
       >
-        {trendingData.map((el) => {
-          return (
-            <div
-              key={el.id}
-              className="relative flex lg:flex-row gap-2 min-w-[100vw] 2xl:min-w-[1536px] cursor-grab active:cursor-grabbing"
-            >
-              <img
-                src={`https://image.tmdb.org/t/p/original/${el?.backdrop_path}`}
-                className="w-full max-w-[1252px] min-h-80  max-h-[90vh] object-cover rounded-lg"
-                loading="lazy"
-                alt={el?.original_title}
-                draggable="false"
-              />
-              <div className="absolute bottom-6 right-0 max-w-96 flex flex-col items-center justify-center gap-2 bg-black/50 p-4  rounded-lg xl:max-w-xl lg:relative lg:bottom-0">
-                <h2 className="text-center flex justify-between w-full gap-2 text-sm sm:text-xl md:text-xl lg:text-3xl">
-                  {el?.original_title}
-                  <span className="flex gap-2 place-self-end lg:text-2xl">
-                    {el?.vote_average.toFixed(1)}&#127871;
-                  </span>
-                </h2>
-                <p className="hidden sm:block text-sm lg:text-xl">
-                  {el?.overview}
-                </p>
-                <button className="border-2 py-1 px-2 text-sm md:text-base hover:text-black hover:bg-white font-black self-end">
-                  More details
-                </button>
+        {!trendingData ? (
+          <img className="mx-auto" src={Loading} alt="Loading" />
+        ) : (
+          trendingData.map((el) => {
+            return (
+              <div
+                key={el.id}
+                className="relative flex lg:flex-row gap-2 min-w-[100vw] 2xl:min-w-[1536px] cursor-grab active:cursor-grabbing"
+              >
+                <img
+                  src={
+                    el?.backdrop_path
+                      ? `https://image.tmdb.org/t/p/original/${el?.backdrop_path}`
+                      : NotFoundImg
+                  }
+                  className="w-full max-w-[1252px] min-h-80  max-h-[90vh] object-cover rounded-lg"
+                  loading="lazy"
+                  alt={el?.original_title}
+                  draggable="false"
+                />
+                <div className="absolute bottom-6 right-0 max-w-96 flex flex-col items-center justify-center gap-2 bg-black/50 p-4  rounded-lg xl:max-w-xl lg:relative lg:bottom-0">
+                  <h2 className="text-center flex justify-between w-full gap-2 text-sm sm:text-xl md:text-xl lg:text-3xl">
+                    {el?.original_title}
+                    <span className="flex gap-2 place-self-end lg:text-2xl">
+                      {el?.vote_average.toFixed(1)}&#127871;
+                    </span>
+                  </h2>
+                  <p className="hidden sm:block text-sm lg:text-xl">
+                    {el?.overview}
+                  </p>
+                  <button className="border-2 py-1 px-2 text-sm md:text-base hover:text-black hover:bg-white font-black self-end">
+                    <Link to={`details/${el.id}`}>More details</Link>
+                  </button>
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })
+        )}
       </motion.section>
 
       <div className="w-full flex gap-1 items-center justify-center absolute bottom-0">
