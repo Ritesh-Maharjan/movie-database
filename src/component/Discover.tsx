@@ -37,7 +37,7 @@ const Discover: React.FC<{ trendingData: ApiResponse[] }> = ({
     return () => {
       clearInterval(intervalRef);
     };
-  }, []);
+  }, [trendingData]);
 
   const onDragEnd = () => {
     // to check if its slight drag or huge drag
@@ -66,7 +66,7 @@ const Discover: React.FC<{ trendingData: ApiResponse[] }> = ({
         dragConstraints={{ left: 0, right: 0 }} // dont want to allow the section to be dragged too much
         style={{ x: dragX }} // assigning the values of x to dragx when we drag
         animate={{
-          translateX: `-${imgIndex * 100}%`,
+          translateX: `-${Math.round(imgIndex * 100)}%`,
         }}
         onDragEnd={onDragEnd}
         transition={{
@@ -76,14 +76,14 @@ const Discover: React.FC<{ trendingData: ApiResponse[] }> = ({
           damping: 50,
         }}
       >
-        {!trendingData ? (
+        {trendingData.length < 1 ? (
           <img className="mx-auto" src={Loading} alt="Loading" />
         ) : (
           trendingData.map((el) => {
             return (
               <div
                 key={el.id}
-                className="relative flex lg:flex-row gap-2 min-w-[100vw] 2xl:min-w-[1536px] cursor-grab active:cursor-grabbing"
+                className="relative flex gap-2 min-w-full max-w-full cursor-grab lg:flex-row active:cursor-grabbing"
               >
                 <img
                   src={
@@ -91,12 +91,12 @@ const Discover: React.FC<{ trendingData: ApiResponse[] }> = ({
                       ? `https://image.tmdb.org/t/p/original/${el?.backdrop_path}`
                       : NotFoundImg
                   }
-                  className="w-full max-w-[1252px] min-h-80  max-h-[90vh] object-cover rounded-lg"
+                  className="max-w-6xl shrink-0 lg:w-2/3 object-cover rounded-lg"
                   loading="lazy"
                   alt={el?.original_title}
                   draggable="false"
                 />
-                <div className="absolute bottom-6 right-0 max-w-96 flex flex-col items-center justify-center gap-2 bg-black/50 p-4  rounded-lg xl:max-w-xl lg:relative lg:bottom-0">
+                <div className="absolute bottom-6 right-0 max-w-96 p-4 overflow-hidden flex flex-col items-center justify-center gap-2 bg-black/50 rounded-lg lg:relative lg:max-w-full lg:bottom-0 lg:p-8 ">
                   <h2 className="text-center flex justify-between w-full gap-2 text-sm sm:text-xl md:text-xl lg:text-3xl">
                     {el?.original_title}
                     <span className="flex gap-2 place-self-end lg:text-2xl">
@@ -116,6 +116,7 @@ const Discover: React.FC<{ trendingData: ApiResponse[] }> = ({
         )}
       </motion.section>
 
+      {/* dots dots  */}
       <div className="w-full flex gap-1 items-center justify-center absolute bottom-0">
         {trendingData.map((_, index) => {
           return (
