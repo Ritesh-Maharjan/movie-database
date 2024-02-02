@@ -2,7 +2,7 @@ import tmdbImg from "../assets/images/tmdb.webp";
 
 const About = () => {
   return (
-    <main className="flex items-center justify-center flex-col gap-10 md:text-3xl text-center md:max-w-4xl pb-5 px-5">
+    <main className="flex items-center justify-center flex-col gap-10 md:text-3xl text-center md:max-w-4xl px-5">
       <h1 className="text-xl my-5 md:my-10 md:text-6xl hover:scale-110">
         Movie <span className="text-orange-400">Database</span>(Mv
         <span className="text-orange-400">DB</span>)

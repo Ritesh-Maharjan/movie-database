@@ -63,7 +63,7 @@ const Header = () => {
 
   return (
     //
-    <header className="mx-auto fixed left-0 right-0 top-0 z-30 w-full h-[5vh] md:h-[10vh] bg-black flex items-center justify-between p-2">
+    <header className="mx-auto fixed left-0 right-0 top-0 z-30 w-full h-12 p-2 md:p-6 md:h-24 bg-black flex items-center justify-between">
       <h1 className="text-lg md:text-6xl hover:scale-110">
         <NavLink to="/">
           Mv<span className="text-orange-400">DB</span>
@@ -154,10 +154,10 @@ const Header = () => {
             openMenu ? "h-20" : "h-0"
           } absolute z-20 bg-black left-0 right-0 top-12 overflow-hidden flex flex-col gap-2 sm:flex-row sm:relative sm:h-auto sm:top-0 md:text-3xl`}
         >
-          <NavLink className="mx-2 mt-2 sm:mt-0 hover:scale-110" to="/about">
+          <NavLink className="mx-2 mt-2 sm:mt-0 hover:text-orange-400" to="/about">
             About
           </NavLink>
-          <NavLink className="mx-2 hover:scale-110" to="/favorite">
+          <NavLink className="mx-2 hover:text-orange-400" to="/favorite">
             Favorite
           </NavLink>
         </div>

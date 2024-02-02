@@ -59,14 +59,14 @@ const Details = () => {
   };
 
   return (
-    <main className=" w-screen">
+    <main className="max-w-screen">
       {!movie ? (
         <img className="mx-auto" src={Loading} alt="Loading" />
       ) : (
         <section>
           {/* movie hero image */}
           {movie?.backdrop_path ? (
-            <figure className="hidden sm:block relative overflow-hidden  max-h-screen">
+            <figure className="hidden sm:block relative overflow-hidden max-h-screen">
               <img
                 src={`${imgUrl}${movie?.backdrop_path}`}
                 alt={movie?.original_title}
@@ -82,7 +82,7 @@ const Details = () => {
             </figure>
           ) : (
             <div
-              className="hidden sm:block relative overflow-hidden min-h-screen"
+              className="hidden sm:block relative w-full overflow-hidden min-h-screen"
               style={{
                 boxShadow: "rgba(0, 0, 0, 0.7) 16px 9px 115px 115px inset",
               }}
@@ -91,11 +91,15 @@ const Details = () => {
 
           {/* movie image/video */}
           <article className="relative flex flex-col gap-2 p-4 items-center max-w-7xl mx-auto overflow-hidden sm:-mt-80 sm:flex-row sm:gap-14">
-            <figure className="max-w-72">
+            <figure className="max-w-72 h-full">
               <img
-                src={`${imgUrl}${movie?.poster_path}`}
+                src={
+                  movie?.poster_path
+                    ? `${imgUrl}${movie?.poster_path}`
+                    : notFoundImg
+                }
                 alt={`${movie?.original_title} poster`}
-                className="rounded-xl"
+                className="rounded-xl min-h-[432px] object-cover"
               />
             </figure>
 
@@ -166,7 +170,7 @@ const Details = () => {
             </div>
             <p className="text-lg">{movie?.overview}</p>
           </article>
-
+              
           {/* movie actors */}
           {movie.credits.cast.length > 0 && (
             <>
