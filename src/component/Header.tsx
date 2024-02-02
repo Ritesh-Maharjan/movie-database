@@ -98,17 +98,21 @@ const Header = () => {
         {/* display only when search input is focused */}
         {searchFocused && (
           <div className="absolute top-14 z-30 bg-gray-500 w-full">
-            {searchResult.map((searchEl, index) => {
-              return (
-                index < 5 && (
-                  <Link key={searchEl.id} to={`details/${searchEl.id}`}>
-                    <p className="cursor-pointer border-b-2 p-2">
-                      {searchEl.original_title}
-                    </p>
-                  </Link>
-                )
-              );
-            })}
+            {searchResult.length === 0 && input.length > 0 ? (
+              <p className="p-2">No search result found</p>
+            ) : (
+              searchResult.map((searchEl, index) => {
+                return (
+                  index < 5 && (
+                    <Link key={searchEl.id} to={`details/${searchEl.id}`}>
+                      <p className="cursor-pointer border-b-2 p-2">
+                        {searchEl.original_title}
+                      </p>
+                    </Link>
+                  )
+                );
+              })
+            )}
           </div>
         )}
       </form>
@@ -154,7 +158,10 @@ const Header = () => {
             openMenu ? "h-20" : "h-0"
           } absolute z-20 bg-black left-0 right-0 top-12 overflow-hidden flex flex-col gap-2 sm:flex-row sm:relative sm:h-auto sm:top-0 md:text-3xl`}
         >
-          <NavLink className="mx-2 mt-2 sm:mt-0 hover:text-orange-400" to="/about">
+          <NavLink
+            className="mx-2 mt-2 sm:mt-0 hover:text-orange-400"
+            to="/about"
+          >
             About
           </NavLink>
           <NavLink className="mx-2 hover:text-orange-400" to="/favorite">
