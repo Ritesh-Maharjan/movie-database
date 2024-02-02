@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { ApiResponse } from "../utils/type/types";
 import Card from "../component/Card";
 import { Link } from "react-router-dom";
+import { TITLE } from "../global";
 
 const Favourite = () => {
   const [favouriteMovie, setFavouriteMovie] = useState<ApiResponse[]>([]);
 
   useEffect(() => {
+    document.title = `${TITLE} - Favourite`;
     // Get all keys from local storage
     const allKeys = Object.keys(localStorage);
 

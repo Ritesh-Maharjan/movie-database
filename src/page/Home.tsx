@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Discover from "../component/Discover";
 import Option from "../component/Option";
 import { ApiResponse } from "../utils/type/types";
+import { TITLE } from "../global";
 
 const Home = () => {
   const apiKey = import.meta.env.VITE_API_KEY;
@@ -123,7 +124,9 @@ const Home = () => {
       console.log(e);
     }
   };
+
   useEffect(() => {
+    document.title = `${TITLE} - Home`;
     getDiscover();
     getNowPlaying();
     getPopular();

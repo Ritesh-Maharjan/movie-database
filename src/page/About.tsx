@@ -1,6 +1,12 @@
+import { useEffect } from "react";
 import tmdbImg from "../assets/images/tmdb.webp";
+import { TITLE } from "../global";
 
 const About = () => {
+  useEffect(() => {
+    document.title = `${TITLE} - About`;
+  }, []);
+  
   return (
     <main className="flex items-center justify-center flex-col gap-10 md:text-3xl text-center md:max-w-4xl px-5">
       <h1 className="text-xl my-5 md:my-10 md:text-6xl hover:scale-110">

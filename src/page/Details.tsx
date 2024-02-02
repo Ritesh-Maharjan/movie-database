@@ -6,6 +6,7 @@ import { DetailsApiResponse } from "../utils/type/types";
 import changeDateFormat from "../utils/DateFormat";
 import notFoundImg from "../assets/images/notfound.jpg";
 import Loading from "../assets/images/loading.gif";
+import { TITLE } from "../global";
 
 const Details = () => {
   const { id } = useParams();
@@ -28,6 +29,8 @@ const Details = () => {
   const [added, setAdded] = useState<string>("");
 
   useEffect(() => {
+    document.title = `${TITLE} - Details`;
+
     // getting the favorite from localstorage if its saved and storing in our state
     let temp = localStorage.getItem(`${id}`);
     temp ? setAdded(temp) : setAdded("");
@@ -170,7 +173,7 @@ const Details = () => {
             </div>
             <p className="text-lg">{movie?.overview}</p>
           </article>
-              
+
           {/* movie actors */}
           {movie.credits.cast.length > 0 && (
             <>

@@ -18,6 +18,7 @@ const Discover: React.FC<{ trendingData: ApiResponse[] }> = ({
   const dragX = useMotionValue(0);
 
   useEffect(() => {
+
     const intervalRef = setInterval(() => {
       const x = dragX.get();
 

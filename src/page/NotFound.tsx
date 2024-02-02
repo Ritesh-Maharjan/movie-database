@@ -1,6 +1,12 @@
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { TITLE } from "../global";
 
 const NotFound = () => {
+  useEffect(() => {
+    document.title = `${TITLE} - NotFound`;
+  }, []);
+
   return (
     <div className="min-h-[90vh] flex items-center flex-col justify-center p-4 text-center gap-2">
       <h1>ERROR 404!! Page Not Found</h1>
