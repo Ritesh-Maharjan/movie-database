@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useInView } from "react-intersection-observer";
 import Discover from "../component/Discover";
 import Option from "../component/Option";
 import { ApiResponse } from "../utils/type/types";
@@ -8,6 +9,26 @@ import { TITLE } from "../global";
 const Home = () => {
   const apiKey = import.meta.env.VITE_API_KEY;
   const baseUrl = import.meta.env.VITE_BASE_URL;
+
+  // Destructure the hook result
+  const [nowPlayingRef, inViewNowPlaying] = useInView({
+    triggerOnce: true, // Set to true to trigger once
+  });
+
+  // Destructure the hook result
+  const [popularRef, inViewPopular] = useInView({
+    triggerOnce: true, // Set to true to trigger once
+  });
+
+  // Destructure the hook result
+  const [topRatedRef, inViewTopRated] = useInView({
+    triggerOnce: true, // Set to true to trigger once
+  });
+
+  // Destructure the hook result
+  const [upcomingRef, inViewUpcoming] = useInView({
+    triggerOnce: true, // Set to true to trigger once
+  });
 
   const [discoverData, setDiscoverData] = useState<ApiResponse[]>([]);
   const [nowPlayingData, setNowPlayingData] = useState<ApiResponse[]>([]);
@@ -128,11 +149,35 @@ const Home = () => {
   useEffect(() => {
     document.title = `${TITLE} - Home`;
     getDiscover();
-    getNowPlaying();
-    getPopular();
-    getTopRated();
-    getUpcoming();
   }, []);
+
+  // Trigger the API calls when the components are in view
+  useEffect(() => {
+    if (inViewNowPlaying) {
+      getNowPlaying();
+    }
+  }, [inViewNowPlaying]);
+
+  // Trigger the API calls when the components are in view
+  useEffect(() => {
+    if (inViewPopular) {
+      getPopular();
+    }
+  }, [inViewPopular]);
+
+  // Trigger the API calls when the components are in view
+  useEffect(() => {
+    if (inViewTopRated) {
+      getTopRated();
+    }
+  }, [inViewTopRated]);
+
+  // Trigger the API calls when the components are in view
+  useEffect(() => {
+    if (inViewUpcoming) {
+      getUpcoming();
+    }
+  }, [inViewUpcoming]);
 
   return (
     <>
@@ -142,21 +187,25 @@ const Home = () => {
           data={nowPlayingData}
           title="now_playing"
           getMoreMovie={getMoreMovie}
+          ref={nowPlayingRef}
         />
         <Option
           data={popularData}
           title="popular"
           getMoreMovie={getMoreMovie}
+          ref={popularRef}
         />
         <Option
           data={topRatedData}
           title="top_rated"
           getMoreMovie={getMoreMovie}
+          ref={topRatedRef}
         />
         <Option
           data={upcomingData}
           title="upcoming"
           getMoreMovie={getMoreMovie}
+          ref={upcomingRef}
         />
       </main>
     </>

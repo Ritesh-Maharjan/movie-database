@@ -1,15 +1,19 @@
 import { motion, useAnimationControls, useMotionValue } from "framer-motion";
 import { ApiResponse } from "../utils/type/types";
 import Card from "./Card";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Loading from "../assets/images/loading.gif";
 
-// defining the props recieved to be the array of ApiResponse type, title string and getMoreMovies function
-const Option: React.FC<{
-  data: ApiResponse[];
-  title: string;
-  getMoreMovie: (type: string, page: number) => void;
-}> = ({ data, title, getMoreMovie }) => {
+const Option = React.forwardRef<
+  HTMLDivElement,
+  {
+    data: ApiResponse[];
+    title: string;
+    getMoreMovie: (type: string, page: number) => void;
+  }
+>((props, ref) => {
+  const { data, title, getMoreMovie } = props;
+
   // to keep track of the width of the whole slider minus the offset of the slider being displayed
   const [width, setWidth] = useState<number>(0);
   // to keep track of pages to call more movies from the api
@@ -85,7 +89,7 @@ const Option: React.FC<{
   };
 
   return (
-    <section className="m-4">
+    <section className="m-4" ref={ref}>
       <div className="flex justify-between items-center">
         <h2 className="text-lg mb-2 sm:text-2xl md:text-4xl md:mb-6">
           {headingTitle}
@@ -140,7 +144,7 @@ const Option: React.FC<{
         className="flex gap-6 cursor-grab focus:cursor-grabbing"
         animate={controls}
       >
-        {!data ? (
+        {data.length === 0 ? (
           <img className="mx-auto" src={Loading} alt="Loading" />
         ) : (
           data?.map((el) => {
@@ -150,6 +154,6 @@ const Option: React.FC<{
       </motion.div>
     </section>
   );
-};
+});
 
 export default Option;
