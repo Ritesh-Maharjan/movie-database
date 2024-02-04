@@ -18,7 +18,7 @@ const Discover: React.FC<{ trendingData: ApiResponse[] }> = ({
   const dragX = useMotionValue(0);
 
   useEffect(() => {
-
+    
     const intervalRef = setInterval(() => {
       const x = dragX.get();
 
@@ -92,6 +92,7 @@ const Discover: React.FC<{ trendingData: ApiResponse[] }> = ({
                       ? `https://image.tmdb.org/t/p/original/${el?.backdrop_path}`
                       : NotFoundImg
                   }
+                  srcSet={`https://image.tmdb.org/t/p/w342/${el?.backdrop_path} 342w, https://image.tmdb.org/t/p/w780/${el?.backdrop_path} 780w`}
                   className="max-w-6xl shrink-0 lg:w-2/3 object-cover rounded-lg"
                   loading="lazy"
                   alt={el?.original_title}

@@ -24,13 +24,21 @@ const Option: React.FC<{
   const controls = useAnimationControls();
 
   useEffect(() => {
-    //  set the width once the component is loaded
-    if (sliderContainer.current) {
-      setWidth(
-        sliderContainer.current?.scrollWidth -
-          sliderContainer.current?.offsetWidth
-      );
-    }
+    const handleResize = () => {
+      //  set the width once the component is loaded
+      if (sliderContainer.current) {
+        setWidth(
+          sliderContainer.current?.scrollWidth -
+            sliderContainer.current?.offsetWidth
+        );
+      }
+    };
+    window.addEventListener("resize", handleResize);
+
+    handleResize();
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, [sliderContainer.current, data]); //need to update width when sliderContainer is loaded first, data when more movie is loaded need to increase width of the scrollable slider
 
   useEffect(() => {
