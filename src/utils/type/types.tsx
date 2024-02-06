@@ -23,6 +23,10 @@ type Cast = {
   profile_path: string;
 };
 
+type Similar = {
+  results: ApiResponse[];
+};
+
 export interface ApiResponse {
   id: number;
   overview: string;
@@ -37,6 +41,7 @@ export interface DetailsApiResponse extends ApiResponse {
   genres: Genre[];
   videos: Results;
   credits: Credits;
+  similar: Similar;
 }
 
 export type SearchResult = {

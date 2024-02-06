@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import axios from "axios";
@@ -7,6 +7,8 @@ import changeDateFormat from "../utils/DateFormat";
 import notFoundImg from "../assets/images/notfound.jpg";
 import Loading from "../assets/images/loading.gif";
 import { TITLE } from "../global";
+import Slider from "../component/Slider";
+import clipAndReplace from "../utils/clipAndReplace";
 
 const Details = () => {
   const { id } = useParams();
@@ -30,7 +32,8 @@ const Details = () => {
 
   useEffect(() => {
     document.title = `${TITLE} - Details`;
-
+    // scrolling to the top of the page
+    window.scrollTo(0,0);
     // getting the favorite from localstorage if its saved and storing in our state
     let temp = localStorage.getItem(`${id}`);
     temp ? setAdded(temp) : setAdded("");
@@ -175,37 +178,74 @@ const Details = () => {
           </article>
 
           {/* movie actors */}
-          {movie.credits.cast.length > 0 && (
-            <>
-              <h2 className="m-8 text-2xl md:text-4xl">Top Billed Casts</h2>
-              <article className="flex flex-wrap justify-center items-center mt-8 gap-4 overflow-hidden">
-                {movie?.credits.cast.map(
-                  (credit, index) =>
-                    index < 8 && (
-                      <figure className="relative">
-                        <img
-                          src={
-                            credit.profile_path
-                              ? `${imgUrl}${credit.profile_path}`
-                              : notFoundImg
-                          }
-                          className="w-40 min-w-40 sm:min-w-52 h-[312px] object-cover"
-                        />
-                        <figcaption className="absolute bottom-0 w-full bg-black/80 p-2 sm:p-4">
+          <article className="overflow-hidden">
+            {movie.credits.cast.length > 0 && (
+              <Slider title="Cast members">
+                {/* movie actors */}
+                <div className="flex justify-center items-center mt-8 gap-4">
+                  {movie?.credits.cast.map((credit) => (
+                    <figure className="relative" key={credit.id}>
+                      <img
+                        draggable="false"
+                        src={
+                          credit.profile_path
+                            ? `${imgUrl}${credit.profile_path}`
+                            : notFoundImg
+                        }
+                        className="w-40 min-w-40 sm:min-w-52 h-[312px] object-cover"
+                      />
+                      <figcaption className="absolute bottom-0 w-full bg-black/80 p-2 sm:p-4">
+                        <span className="text-sm sm:text-xl">
+                          {clipAndReplace(credit.name, 15)}
+                        </span>
+                        <br />
+                        <span className="text-sm sm:text-xl">
+                          {clipAndReplace(credit.character, 15)}
+                        </span>
+                      </figcaption>
+                    </figure>
+                  ))}
+                </div>
+              </Slider>
+            )}
+          </article>
+
+          {/* movie actors */}
+          <article className="overflow-hidden">
+            {movie.similar.results.length > 0 && (
+              <Slider title="Similar Movies">
+                {/* movie actors */}
+                <div className="flex justify-center items-center mt-8 gap-4">
+                  {movie.similar.results.map((el) => (
+                    <figure className="relative" key={el.id}>
+                      <img
+                        draggable="false"
+                        src={
+                          el.poster_path
+                            ? `${imgUrl}${el.poster_path}`
+                            : notFoundImg
+                        }
+                        className="w-40 min-w-40 sm:min-w-52 h-[312px] object-cover"
+                      />
+                      <figcaption className="absolute top-0 left-0 right-0 bottom-0 opacity-0 hover:opacity-100">
+                        <div className="absolute bottom-0 w-full bg-black/80 p-2 sm:p-4 flex flex-col">
                           <span className="text-sm sm:text-xl">
-                            {credit.name}
+                            {clipAndReplace(el.original_title, 12)}
                           </span>
-                          <br />
-                          <span className="text-sm sm:text-xl">
-                            {credit.character}
-                          </span>
-                        </figcaption>
-                      </figure>
-                    )
-                )}
-              </article>
-            </>
-          )}
+                          <Link
+                            to={`/details/${el.id}`}
+                            className="bg-blue-500 text-xs px-2 py-1 rounded-md hover:scale-105 sm:px-4 sm:text-base w-fit"
+                          >
+                            Details
+                          </Link>
+                        </div>
+                      </figcaption>
+                    </figure>
+                  ))}
+                </div>
+              </Slider>
+            )}
+          </article>
         </section>
       )}
     </main>
