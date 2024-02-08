@@ -65,6 +65,10 @@ const Header = () => {
 
   const search = (e: FormEvent) => {
     e.preventDefault();
+    if (inputRef.current) {
+      inputRef.current.value = "";
+    } 
+    setInput("");
     navigate(`/search/${input}`);
   };
 
