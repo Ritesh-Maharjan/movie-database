@@ -1,9 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import axios from "axios";
 import { SearchResult } from "../utils/type/types";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const navigate = useNavigate();
   // For mobile menu
   const [openMenu, setOpenMenu] = useState(false);
   // search input reference
@@ -61,6 +63,11 @@ const Header = () => {
     };
   }, [input]);
 
+  const search = (e: FormEvent) => {
+    e.preventDefault();
+    navigate(`/search/${input}`);
+  };
+
   return (
     //
     <header className="mx-auto fixed left-0 right-0 top-0 z-30 w-full h-12 p-2 md:p-6 md:h-24 bg-black flex items-center justify-between">
@@ -71,7 +78,7 @@ const Header = () => {
       </h1>
 
       {/* Input Search */}
-      <form className={`relative flex items-center sm:w-1/3`}>
+      <form className={`relative flex items-center sm:w-1/3`} onSubmit={search}>
         <input
           ref={inputRef}
           className="outline-none text-xs text-slate-800 p-1 rounded-lg w-full md:text-2xl "
@@ -87,7 +94,8 @@ const Header = () => {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="#94a3b8"
-          className="w-5 h-5 lg:w-8 lg:h-8 absolute right-0"
+          className="w-5 h-5 lg:w-8 lg:h-8 absolute right-0 cursor-pointer"
+          onClick={search}
         >
           <path
             strokeLinecap="round"
@@ -97,21 +105,21 @@ const Header = () => {
         </svg>
         {/* display only when search input is focused */}
         {searchFocused && (
-          <div className="absolute top-14 z-30 bg-gray-500 w-full">
+          <div className="absolute top-10 z-30 bg-gray-800 bg-opacity-50 backdrop-blur-lg shadow-xl border border-gray-800 w-full max-h-48 rounded-md overflow-scroll">
             {searchResult.length === 0 && input.length > 0 ? (
               <p className="p-2">No search result found</p>
             ) : (
-              searchResult.map((searchEl, index) => {
-                return (
-                  index < 5 && (
+              <>
+                {searchResult.map((searchEl) => {
+                  return (
                     <Link key={searchEl.id} to={`details/${searchEl.id}`}>
                       <p className="cursor-pointer border-b-2 p-2">
                         {searchEl.original_title}
                       </p>
                     </Link>
-                  )
-                );
-              })
+                  );
+                })}
+              </>
             )}
           </div>
         )}

@@ -7,6 +7,7 @@ import Footer from "./component/Footer";
 import NotFound from "./page/NotFound";
 import Details from "./page/Details";
 import { APP_FOLDER_NAME } from "./global";
+import Search from "./page/Search";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/favorite" element={<Favorite />} />
         <Route path="/details/:id" element={<Details />} />
         <Route path="/about" element={<About />} />
+        <Route path="/search/:query" element={<Search />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
       <Footer />

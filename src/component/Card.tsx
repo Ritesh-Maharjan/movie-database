@@ -88,7 +88,7 @@ const Card: React.FC<{ movie: ApiResponse }> = ({ movie }) => {
             : NotFoundImg
         }
         alt={movie.poster_path ? movie.original_title : "Not found image"}
-        className="rounded-lg"
+        className="min-h-80 w-full rounded-lg object-cover"
         loading="lazy"
       />
     </motion.div>
