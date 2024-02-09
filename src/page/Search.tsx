@@ -52,6 +52,9 @@ const Search = () => {
 
   return (
     <main className="flex flex-col items-center justify-center">
+      <h2 className="mb-8 text-lg md:text-4xl">Search Results for {query}</h2>
+
+
       {loading ? (
         <img src={loadingImg} alt="loading images" />
       ) : (
@@ -67,12 +70,12 @@ const Search = () => {
       )}
 
       {totalPages > 1 && totalPages > page && (
-          <button
-            onClick={loadMore}
-            className="px-4 py-2 mt-10 w-fit bg-orange-400 text-gray-700 rounded-lg hover:scale-110 hover:text-xl"
-          >
-            Load More
-          </button>
+        <button
+          onClick={loadMore}
+          className="px-4 py-2 mt-10 w-fit bg-orange-400 text-gray-700 rounded-lg hover:scale-110 hover:text-xl"
+        >
+          Load More
+        </button>
       )}
     </main>
   );
