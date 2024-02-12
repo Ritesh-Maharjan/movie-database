@@ -45,73 +45,13 @@ const Home = () => {
     },
   };
 
-  const getDiscover = async () => {
-    try {
-      const response = await axios.get(
-        `${baseUrl}/3/trending/movie/day?language=en-US&results=5`,
-        options
-      );
-      setDiscoverData(response.data.results);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const getNowPlaying = async () => {
-    try {
-      const response = await axios.get(
-        `${baseUrl}/3/movie/now_playing?language=en-US&page=1`,
-        options
-      );
-      setNowPlayingData(response.data.results);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const getPopular = async () => {
-    try {
-      const response = await axios.get(
-        `${baseUrl}/3/movie/popular?language=en-US&page=1`,
-        options
-      );
-      setPopularData(response.data.results);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const getTopRated = async () => {
-    try {
-      const response = await axios.get(
-        `${baseUrl}/3/movie/top_rated?language=en-US&page=1`,
-        options
-      );
-      setTopRatedData(response.data.results);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const getUpcoming = async () => {
-    try {
-      const response = await axios.get(
-        `${baseUrl}/3/movie/upcoming?language=en-US&page=1`,
-        options
-      );
-      setUpcomingData(response.data.results);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const getMoreMovie = async (type: string, page: number) => {
+  const fetchMovie = async (type: string, page: number = 1) => {
+    console.log("running");
     try {
       const response = await axios.get(
         `${baseUrl}/3/movie/${type}?language=en-US&page=${page}`,
         options
       );
-
       switch (type) {
         case "upcoming":
           setUpcomingData((prevState) => [
@@ -146,6 +86,18 @@ const Home = () => {
     }
   };
 
+  const getDiscover = async () => {
+    try {
+      const response = await axios.get(
+        `${baseUrl}/3/trending/movie/day?language=en-US&results=5`,
+        options
+      );
+      setDiscoverData(response.data.results);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   useEffect(() => {
     document.title = `${TITLE} - Home`;
     getDiscover();
@@ -154,28 +106,28 @@ const Home = () => {
   // Trigger the API calls when the components are in view
   useEffect(() => {
     if (inViewNowPlaying) {
-      getNowPlaying();
+      fetchMovie("now_playing");
     }
   }, [inViewNowPlaying]);
 
   // Trigger the API calls when the components are in view
   useEffect(() => {
     if (inViewPopular) {
-      getPopular();
+      fetchMovie("popular");
     }
   }, [inViewPopular]);
 
   // Trigger the API calls when the components are in view
   useEffect(() => {
     if (inViewTopRated) {
-      getTopRated();
+      fetchMovie("top_rated");
     }
   }, [inViewTopRated]);
 
   // Trigger the API calls when the components are in view
   useEffect(() => {
     if (inViewUpcoming) {
-      getUpcoming();
+      fetchMovie("upcoming");
     }
   }, [inViewUpcoming]);
 
@@ -186,25 +138,25 @@ const Home = () => {
         <Option
           data={nowPlayingData}
           title="now_playing"
-          getMoreMovie={getMoreMovie}
+          getMoreMovie={fetchMovie}
           ref={nowPlayingRef}
         />
         <Option
           data={popularData}
           title="popular"
-          getMoreMovie={getMoreMovie}
+          getMoreMovie={fetchMovie}
           ref={popularRef}
         />
         <Option
           data={topRatedData}
           title="top_rated"
-          getMoreMovie={getMoreMovie}
+          getMoreMovie={fetchMovie}
           ref={topRatedRef}
         />
         <Option
           data={upcomingData}
           title="upcoming"
-          getMoreMovie={getMoreMovie}
+          getMoreMovie={fetchMovie}
           ref={upcomingRef}
         />
       </main>
