@@ -109,7 +109,7 @@ const Header = () => {
         </svg>
         {/* display only when search input is focused */}
         {searchFocused && (
-          <div className="absolute top-10 z-30 bg-gray-800 bg-opacity-50 backdrop-blur-lg shadow-xl border border-gray-800 w-full max-h-48 rounded-md overflow-scroll">
+          <div className="absolute top-10 z-30 bg-gray-800 bg-opacity-50 backdrop-blur-lg shadow-xl border border-gray-800 w-full max-h-48 rounded-md overflow-x-hidden overflow-y-scroll">
             {searchResult.length === 0 && input.length > 0 ? (
               <p className="p-2">No search result found</p>
             ) : (
