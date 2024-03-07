@@ -52,8 +52,8 @@ const Card: React.FC<{ movie: ApiResponse }> = ({ movie }) => {
         animate={controls}
         className="absolute h-full w-full top-0 flex flex-col items-center justify-center gap-4 p-2 rounded-lg"
       >
-        <h4 className="sm:text-2xl">
-          {clipAndReplace(movie.original_title, 10)}
+        <h4 className="sm:text-2xl text-center">
+          {clipAndReplace(movie.original_title, 24)}
         </h4>
         <div className="flex text-xs justify-between w-full sm:text-base">
           <span>{changeDateFormat(movie.release_date)}</span>

@@ -13,7 +13,7 @@ const Option = React.forwardRef<
   }
 >((props, ref) => {
   const { data, title, getMoreMovie } = props;
-
+  const [info, setInfo] = useState(false);
   // to keep track of the width of the whole slider minus the offset of the slider being displayed
   const [width, setWidth] = useState<number>(0);
   // to keep track of pages to call more movies from the api
@@ -91,9 +91,38 @@ const Option = React.forwardRef<
   return (
     <section className="m-4" ref={ref}>
       <div className="flex justify-between items-center">
-        <h2 className="text-lg mb-2 sm:text-2xl md:text-4xl md:mb-6">
-          {headingTitle}
-        </h2>
+        <div className="flex items-center justify-center mb-5 gap-2">
+          <h2 className="text-lg sm:text-2xl md:text-3xl ">{headingTitle}</h2>
+
+          <div
+            className="relative hidden md:block"
+            onMouseEnter={() => setInfo(true)}
+            onMouseLeave={() => setInfo(false)}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
+              />
+            </svg>
+
+            <p
+              className={`${
+                info ? "block" : "hidden"
+              } absolute top-3 left-1/2  md:w-80 z-30 pl-4`}
+            >
+              Drag a bit more at the end to load more movies
+            </p>
+          </div>
+        </div>
 
         <div className="flex gap-4 ">
           <motion.svg
@@ -131,7 +160,7 @@ const Option = React.forwardRef<
           </motion.svg>
         </div>
       </div>
-      <motion.div
+      <motion.article
         ref={sliderContainer}
         drag="x"
         dragConstraints={{ right: 0, left: -width }}
@@ -151,7 +180,7 @@ const Option = React.forwardRef<
             return <Card key={el.id} movie={el} />;
           })
         )}
-      </motion.div>
+      </motion.article>
     </section>
   );
 });
