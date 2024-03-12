@@ -2,6 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import axios from "axios";
+import { useDispatch } from "react-redux";
 import { DetailsApiResponse } from "../utils/type/types";
 import changeDateFormat from "../utils/DateFormat";
 import notFoundImg from "../assets/images/notfound.jpg";
@@ -9,9 +10,14 @@ import Loading from "../assets/images/loading.gif";
 import { TITLE } from "../global";
 import Slider from "../component/Slider";
 import clipAndReplace from "../utils/clipAndReplace";
+import { addPopup, removePopup } from "../features/popup/popupSlice";
 
 const Details = () => {
+  // getting id from url to get the details of a single movie
   const { id } = useParams();
+  // using dispatch for our popup
+  const dispatch = useDispatch();
+
   // getting the base url and apikey from our env files
   const apiKey = import.meta.env.VITE_API_KEY;
   const baseUrl = import.meta.env.VITE_BASE_URL;
@@ -33,7 +39,7 @@ const Details = () => {
   useEffect(() => {
     document.title = `${TITLE} - Details`;
     // scrolling to the top of the page
-    window.scrollTo(0,0);
+    window.scrollTo(0, 0);
     // getting the favorite from localstorage if its saved and storing in our state
     let temp = localStorage.getItem(`${id}`);
     temp ? setAdded(temp) : setAdded("");
@@ -58,10 +64,30 @@ const Details = () => {
     if (temp) {
       localStorage.removeItem(`${id}`);
       setAdded("");
+
+      // only run this code if the movie is loaded
+      movie &&
+        dispatch(
+          addPopup({
+            displayText: movie.original_title,
+            displayStatus: "remove",
+          })
+        );
     } else {
       localStorage.setItem(`${id}`, JSON.stringify(movie));
       setAdded("true");
+
+        // only run this code if the movie is loaded
+      movie &&
+        dispatch(
+          addPopup({ displayText: movie.original_title, displayStatus: "add" })
+        );
     }
+
+    // to remove the popup after 2 sec
+    setTimeout(() => {
+      dispatch(removePopup());
+    }, 2000);
   };
 
   return (

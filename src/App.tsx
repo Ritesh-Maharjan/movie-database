@@ -8,6 +8,7 @@ import NotFound from "./page/NotFound";
 import Details from "./page/Details";
 import { APP_FOLDER_NAME } from "./global";
 import Search from "./page/Search";
+import Popup from "./component/Popup";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/search/:query" element={<Search />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
+      <Popup />
       <Footer />
     </BrowserRouter>
   );

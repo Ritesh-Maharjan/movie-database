@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, useAnimation } from "framer-motion";
+import { useDispatch } from "react-redux";
 import { ApiResponse } from "../utils/type/types";
 import clipAndReplace from "../utils/clipAndReplace";
 import NotFoundImg from "../assets/images/notfound.jpg";
 import changeDateFormat from "../utils/DateFormat";
+import { addPopup, removePopup } from "../features/popup/popupSlice";
 
 // Will recieve a single movie with type of ApiResponse
 const Card: React.FC<{ movie: ApiResponse }> = ({ movie }) => {
   // to display whether the movies are added to favorite or not
   const [added, setAdded] = useState<string>("");
   const [isTapped, setIsTapped] = useState<boolean>(false);
+  const dispatch = useDispatch();
   const controls = useAnimation();
 
   useEffect(() => {
@@ -25,10 +28,21 @@ const Card: React.FC<{ movie: ApiResponse }> = ({ movie }) => {
     if (temp) {
       localStorage.removeItem(`${movie.id}`);
       setAdded("");
+      dispatch(
+        addPopup({ displayText: movie.original_title, displayStatus: "remove" })
+      );
     } else {
       localStorage.setItem(`${movie.id}`, JSON.stringify(movie));
       setAdded("true");
+      dispatch(
+        addPopup({ displayText: movie.original_title, displayStatus: "add" })
+      );
     }
+
+    // to remove the popup after 2 sec
+    setTimeout(() => {
+      dispatch(removePopup());
+    }, 2000);
   };
 
   const handleTap = () => {
